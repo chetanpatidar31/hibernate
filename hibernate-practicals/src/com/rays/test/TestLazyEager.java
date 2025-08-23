@@ -1,39 +1,33 @@
-package com.rays.crud;
+package com.rays.test;
 
-import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.rays.user.UserDTO;
+import com.rays.auction.AuctionItem;
 
-public class TestUpdate {
+public class TestLazyEager {
+	
 	public static void main(String[] args) {
-
-		UserDTO dto = new UserDTO();
-
-		dto.setId(3);
-		dto.setFirstName("Lucky");
-		dto.setLastName("Kirar");
-		dto.setLoginId("lucky@gmail.com");
-		dto.setPassword("123");
-		dto.setDob(new Date());
-		dto.setAddress("Gwalior");
-
+		
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 
 		Session session = sf.openSession();
 
 		Transaction tx = session.beginTransaction();
 
-		session.update(dto);
+		AuctionItem item = (AuctionItem) session.get(AuctionItem.class, 1);
+
+//		 Set s = item.getBids();
+
+//		 Iterator it = s.iterator();
 
 		tx.commit();
 
 		session.close();
-		
-		sf.close();
 	}
 }

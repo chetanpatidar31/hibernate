@@ -1,4 +1,4 @@
-package com.rays.crud;
+package com.rays.test;
 
 import java.util.Date;
 
@@ -9,18 +9,17 @@ import org.hibernate.cfg.Configuration;
 
 import com.rays.user.UserDTO;
 
-public class TestUpdate {
-	public static void main(String[] args) {
+public class TestFlush {
 
+	public static void main(String[] args) {
 		UserDTO dto = new UserDTO();
 
-		dto.setId(3);
-		dto.setFirstName("Lucky");
-		dto.setLastName("Kirar");
-		dto.setLoginId("lucky@gmail.com");
+		dto.setFirstName("aaa");
+		dto.setLastName("aaa");
+		dto.setLoginId("aaa@gmail.com");
 		dto.setPassword("123");
 		dto.setDob(new Date());
-		dto.setAddress("Gwalior");
+		dto.setAddress("indore");
 
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 
@@ -28,7 +27,15 @@ public class TestUpdate {
 
 		Transaction tx = session.beginTransaction();
 
-		session.update(dto);
+		session.save(dto);
+
+		session.flush();
+
+		System.out.println("id = " + dto.getId());
+
+		dto = (UserDTO) session.get(UserDTO.class, 2);
+
+		System.out.println("first name = " + dto.getFirstName());
 
 		tx.commit();
 

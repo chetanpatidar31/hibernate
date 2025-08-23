@@ -1,26 +1,13 @@
-package com.rays.crud;
-
-import java.util.Date;
+package com.rays.auction;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.rays.user.UserDTO;
+public class TestAuctionDelete {
 
-public class TestUpdate {
 	public static void main(String[] args) {
-
-		UserDTO dto = new UserDTO();
-
-		dto.setId(3);
-		dto.setFirstName("Lucky");
-		dto.setLastName("Kirar");
-		dto.setLoginId("lucky@gmail.com");
-		dto.setPassword("123");
-		dto.setDob(new Date());
-		dto.setAddress("Gwalior");
 
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 
@@ -28,12 +15,12 @@ public class TestUpdate {
 
 		Transaction tx = session.beginTransaction();
 
-		session.update(dto);
+		AuctionItem item = (AuctionItem) session.get(AuctionItem.class, 2);
+
+		session.delete(item);
 
 		tx.commit();
 
 		session.close();
-		
-		sf.close();
 	}
 }

@@ -1,26 +1,13 @@
-package com.rays.crud;
-
-import java.util.Date;
+package com.rays.one2one;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.rays.user.UserDTO;
+public class TestOneOneDelete {
 
-public class TestUpdate {
 	public static void main(String[] args) {
-
-		UserDTO dto = new UserDTO();
-
-		dto.setId(3);
-		dto.setFirstName("Lucky");
-		dto.setLastName("Kirar");
-		dto.setLoginId("lucky@gmail.com");
-		dto.setPassword("123");
-		dto.setDob(new Date());
-		dto.setAddress("Gwalior");
 
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 
@@ -28,12 +15,14 @@ public class TestUpdate {
 
 		Transaction tx = session.beginTransaction();
 
-		session.update(dto);
+		Employee emp = (Employee) session.get(Employee.class, 1);
+
+		session.delete(emp);
 
 		tx.commit();
 
 		session.close();
-		
+
 		sf.close();
 	}
 }
